@@ -397,7 +397,7 @@ function pillRects(){
     return [
       { id:'toggle', rect:tr, label:'CHAOS VIEW '+(divOn?'ON':'OFF'), active:divOn, color:'#f0883e' },
       { id:'assist', rect:{x:W-152,y:100,w:140,h:30}, label:'ASSIST '+(assist?'ON':'OFF'), active:assist, color:'#69f0ae' },
-      { id:'support', rect:{x:12,y:H-46,w:124,h:30}, label:'☕  SUPPORT', active:false, color:'#ffd54f' }
+      { id:'support', rect:{x:12,y:H-46,w:176,h:30}, label:'☕  BUY ME A COFFEE', active:false, color:'#ffd54f' }
     ];
   }
   if (state === 'victory'){
@@ -942,9 +942,10 @@ function drawToast(){
 }
 function drawPill(p){
   const r = p.rect;
+  const tip = (p.id==='support');                       // patronage chip: always warm, never reads as a game control
   roundRect(r.x,r.y,r.w,r.h,8);
-  ctx.fillStyle = p.active ? hexA(p.color,0.18) : 'rgba(255,255,255,0.06)'; ctx.fill();
-  ctx.strokeStyle = p.active ? hexA(p.color,0.7) : 'rgba(255,255,255,0.25)'; ctx.lineWidth=1; ctx.stroke();
+  ctx.fillStyle = tip ? 'rgba(255,213,79,0.12)' : (p.active ? hexA(p.color,0.18) : 'rgba(255,255,255,0.06)'); ctx.fill();
+  ctx.strokeStyle = tip ? 'rgba(255,213,79,0.55)' : (p.active ? hexA(p.color,0.7) : 'rgba(255,255,255,0.25)'); ctx.lineWidth=1; ctx.stroke();
   const isState = (p.id==='toggle'||p.id==='assist');
   if (isState){
     ctx.fillStyle = p.active ? p.color : '#888';
@@ -954,7 +955,7 @@ function drawPill(p){
     ctx.font='700 12px Segoe UI'; ctx.fillText(p.label, r.x+24, r.y+r.h/2+0.5);
   } else {
     ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.fillStyle='#bfeeff'; ctx.font='700 12px Segoe UI';
+    ctx.fillStyle = tip ? '#ffe082' : '#bfeeff'; ctx.font='700 12px Segoe UI';
     ctx.fillText(p.label, r.x+r.w/2, r.y+r.h/2+0.5);
   }
 }
